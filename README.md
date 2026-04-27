@@ -21,15 +21,15 @@ instead of project (`.claude/skills/`).
 
 ## Skills
 
-| Skill                                                      | What it does                                                                                                    | Triggers                                                                       |
-|------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------|
-| [`skill-new`](skills/skill-new/SKILL.md)                   | Scaffolds a new skill in the project's existing layout.                                                         | "создай скилл" / "create a skill"                                              |
-| [`sembr`](skills/sembr/SKILL.md)                           | Reformats prose using [Semantic Line Breaks](https://sembr.org/); auto-applies to `.md` / `.rst` edits.         | "оформи по sembr" / "format with sembr" / `.md` / `.rst` edits                 |
-| [`mise`](skills/mise/SKILL.md)                             | Configures [mise](https://mise.jdx.dev/) as the sole runtime/tool manager; aqua backend, fully pinned versions. | "поставь go" / "запинь версию" / "set up tools" / "migrate from nvm/asdf/brew" |
-| [`roast`](skills/roast/SKILL.md)                           | Direct critical review of an artifact; surfaces problems, stops at findings (no fix proposals).                 | "прожарь" / "разнеси" / "найди дыры" / "roast" / "tear apart"                  |
-| [`vcs-commit-msg`](skills/vcs-commit-msg/SKILL.md)         | Writes commit messages matching the project's existing style (git or other VCS); never AI-attributed.           | "сделай коммит" / "make a commit" / `git commit` / amend / reword              |
-| [`vcs-identity-check`](skills/vcs-identity-check/SKILL.md) | Verifies VCS identity (name + email) before committing; recommends commit signing (GPG/SSH) if missing.         | "проверь автора" / "check git identity" / "настрой подпись коммитов"           |
-| [`which`](skills/which/SKILL.md)                           | Forbids `which`; mandates POSIX `command -v` instead.                                                           | "есть ли команда" / "which foo" / "check if X is installed"                    |
+| Skill                                                      | What it does                                                                                                    |
+|------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------|
+| [`skill-new`](skills/skill-new/SKILL.md)                   | Scaffolds a new skill in the project's existing layout.                                                         |
+| [`sembr`](skills/sembr/SKILL.md)                           | Reformats prose using [Semantic Line Breaks](https://sembr.org/); auto-applies to `.md` / `.rst` edits.         |
+| [`mise`](skills/mise/SKILL.md)                             | Configures [mise](https://mise.jdx.dev/) as the sole runtime/tool manager; aqua backend, fully pinned versions. |
+| [`roast`](skills/roast/SKILL.md)                           | Direct critical review of an artifact; surfaces problems, stops at findings (no fix proposals).                 |
+| [`vcs-commit-msg`](skills/vcs-commit-msg/SKILL.md)         | Writes commit messages matching the project's existing style (git or other VCS); never AI-attributed.           |
+| [`vcs-identity-check`](skills/vcs-identity-check/SKILL.md) | Verifies VCS identity (name + email) before committing; recommends commit signing (GPG/SSH) if missing.         |
+| [`which`](skills/which/SKILL.md)                           | Forbids `which`; mandates POSIX `command -v` instead.                                                           |
 
 ## Layout
 

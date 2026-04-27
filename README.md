@@ -21,57 +21,15 @@ instead of project (`.claude/skills/`).
 
 ## Skills
 
-- **`skill-new`** —
-  scaffolds a new skill in the current project's existing layout.
-  Triggers: "создай скилл" / "create a skill".
-- **`sembr`** —
-  reformats prose using Semantic Line Breaks
-  ([sembr.org](https://sembr.org/)), strictly.
-  Two modes: explicit reformat on request,
-  and default-on-edit for `.md` / `.rst` files
-  (new prose in sembr, in-place edits match the existing paragraph,
-  untouched paragraphs left alone).
-  Triggers: "оформи по sembr" / "format with sembr",
-  or any edit to a Markdown / reST file.
-- **`mise`** —
-  configures [mise](https://mise.jdx.dev/) as the sole runtime/tool
-  manager,
-  enforces aqua as the default backend,
-  and requires fully pinned versions.
-  Triggers: "поставь go" / "запинь версию" / "set up tools" /
-  "migrate from nvm/asdf/brew".
-- **`roast`** —
-  direct critical review of an artifact (file, plan, idea, skill);
-  surfaces substantive problems first and stops at findings.
-  Triggers: "прожарь" / "разнеси" / "найди дыры" / "roast" /
-  "tear apart".
-- **`vcs-commit-msg`** —
-  writes commit messages (git or any other popular VCS) that
-  match the project's existing style, inferred from history;
-  asks the user for any dimension that can't be detected;
-  always shows the message before committing.
-  Never mentions an AI agent or model in the composed message
-  (no co-author trailer, no «Generated with …», no inline
-  reference).
-  Triggers: "сделай коммит" / "оформи сообщение коммита" /
-  "make a commit" / "write a commit message",
-  or any `git commit` / amend / reword flow.
-- **`vcs-identity-check`** —
-  verifies the VCS author identity (name + email) is set correctly
-  before committing,
-  and recommends configuring commit signing (GPG or SSH)
-  when it isn't already set up;
-  pairs with `vcs-commit-msg`.
-  Triggers: "проверь git config" / "проверь автора" /
-  "настрой подпись коммитов" / "check git identity" /
-  "verify commit author" / "configure commit signing".
-- **`which`** —
-  forbids using `which` to check command availability or resolve a
-  binary path; mandates the POSIX builtin `command -v` instead,
-  with idioms for existence checks, path resolution, and edge cases.
-  Triggers: "есть ли команда" / "проверь, установлен ли" /
-  "which foo" / "check if X is installed" / "is X on PATH",
-  or any shell snippet probing a command.
+| Skill                                                      | What it does                                                                                                    | Triggers                                                                       |
+|------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------|
+| [`skill-new`](skills/skill-new/SKILL.md)                   | Scaffolds a new skill in the project's existing layout.                                                         | "создай скилл" / "create a skill"                                              |
+| [`sembr`](skills/sembr/SKILL.md)                           | Reformats prose using [Semantic Line Breaks](https://sembr.org/); auto-applies to `.md` / `.rst` edits.         | "оформи по sembr" / "format with sembr" / `.md` / `.rst` edits                 |
+| [`mise`](skills/mise/SKILL.md)                             | Configures [mise](https://mise.jdx.dev/) as the sole runtime/tool manager; aqua backend, fully pinned versions. | "поставь go" / "запинь версию" / "set up tools" / "migrate from nvm/asdf/brew" |
+| [`roast`](skills/roast/SKILL.md)                           | Direct critical review of an artifact; surfaces problems, stops at findings (no fix proposals).                 | "прожарь" / "разнеси" / "найди дыры" / "roast" / "tear apart"                  |
+| [`vcs-commit-msg`](skills/vcs-commit-msg/SKILL.md)         | Writes commit messages matching the project's existing style (git or other VCS); never AI-attributed.           | "сделай коммит" / "make a commit" / `git commit` / amend / reword              |
+| [`vcs-identity-check`](skills/vcs-identity-check/SKILL.md) | Verifies VCS identity (name + email) before committing; recommends commit signing (GPG/SSH) if missing.         | "проверь автора" / "check git identity" / "настрой подпись коммитов"           |
+| [`which`](skills/which/SKILL.md)                           | Forbids `which`; mandates POSIX `command -v` instead.                                                           | "есть ли команда" / "which foo" / "check if X is installed"                    |
 
 ## Layout
 

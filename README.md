@@ -56,6 +56,15 @@ instead of project (`.claude/skills/`).
   Triggers: "сделай коммит" / "оформи сообщение коммита" /
   "make a commit" / "write a commit message",
   or any `git commit` / amend / reword flow.
+- **`vcs-identity-check`** —
+  verifies the VCS author identity (name + email) is set correctly
+  before committing,
+  and recommends configuring commit signing (GPG or SSH)
+  when it isn't already set up;
+  pairs with `vcs-commit-msg`.
+  Triggers: "проверь git config" / "проверь автора" /
+  "настрой подпись коммитов" / "check git identity" /
+  "verify commit author" / "configure commit signing".
 - **`which`** —
   forbids using `which` to check command availability or resolve a
   binary path; mandates the POSIX builtin `command -v` instead,

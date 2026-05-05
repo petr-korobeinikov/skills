@@ -3,16 +3,19 @@ name: git-flow-next
 description: >-
   Installs git-flow-next (the actively maintained Tower / gittower fork
   documented at https://git-flow.sh/) via mise's aqua backend, initializes
-  the classic Gitflow preset, configures squash as the upstream merge
-  strategy for feature branches, and runs the feature / release / hotfix
-  flow with `git flow …` commands.
+  the classic Gitflow preset, configures rebase as the upstream merge
+  strategy for feature branches with a contributor-side interactive rebase
+  that collapses the branch into a single commit with a hand-written
+  message before finish, and runs the feature / release / hotfix flow
+  with `git flow …` commands.
 when_to_use: >-
   Use whenever Gitflow tooling is involved: starting / finishing
   feature, release, or hotfix branches; setting up `git flow` in a new
   repo; migrating off the abandoned nvie git-flow or gitflow-avh forks.
   Triggers: «настрой git-flow», «поставь git-flow», «начни фичу»,
-  «заверши фичу со сквошем», «git flow init», «set up gitflow»,
-  «start a feature branch», «finish feature with squash»,
+  «заверши фичу одним коммитом», «схлопни фичу в один коммит»,
+  «git flow init», «set up gitflow», «start a feature branch»,
+  «finish feature as one commit», «collapse feature into one commit»,
   «release branch», «hotfix branch». Also triggers when the repo
   already carries `gitflow.*` git config keys or branches under
   `feature/`, `release/`, `hotfix/` prefixes.
@@ -59,19 +62,45 @@ only one can win on `$PATH`.
    No `brew install git-flow-next`,
    no manual binary downloads,
    no `go install`.
-3. **Squash is the upstream merge strategy for feature branches** —
-   enforced once, in exactly one place per repo:
+3. **Rebase-to-one-commit is the upstream merge strategy for feature
+   branches.**
+   The branch is collapsed into a single commit with a hand-written
+   message *before* finish (not by the merge tool),
+   so the original authorship is preserved and the per-WIP commit
+   messages don't end up concatenated on `develop`.
+   Enforced once, in exactly one place per repo:
    - **Local-finish workflow** —
-     set `gitflow.branch.feature.upstreamstrategy = squash`
-     so `git flow feature finish` collapses the branch into a single
-     commit on `develop`.
+     set `gitflow.branch.feature.upstreamstrategy = rebase`
+     so `git flow feature finish` rebases the feature branch onto
+     `develop` linearly,
+     no merge commit.
+     The contributor is responsible for collapsing the branch to a
+     single commit
+     (`git rebase -i $(git merge-base HEAD develop)` with `fixup` on
+     every non-first commit, then a clean message)
+     *before* running `git flow feature finish`.
+     Do **not** use `upstreamstrategy = squash` —
+     it creates a new commit without the original author and
+     concatenates all commit messages by default,
+     which is the behavior this policy exists to avoid.
    - **PR-review workflow** —
-     leave that key unset and configure the hosting platform's
-     PR-merge button to **squash** (not merge / rebase),
-     so the policy is enforced server-side.
+     leave that key unset and configure the hosting platform's PR-merge
+     button to **rebase and merge** (not "squash and merge", not plain
+     "create a merge commit").
+     The contributor collapses the branch to a single commit locally
+     (interactive rebase as above) before requesting review,
+     so what lands on `develop` is the one clean commit they wrote.
+     Hosting-platform "squash and merge" is **not** an acceptable
+     substitute —
+     by default it concatenates the per-commit messages into the body
+     and,
+     depending on platform settings,
+     may attribute the resulting commit to the merger rather than the
+     contributor.
+     The merger has to override both manually on every PR.
 
    Pick one path per repo;
-   mixing both double-merges or fails.
+   mixing both double-applies or fails.
    Releases and hotfixes keep their default `merge` strategy
    so the merge commit and the version tag stay paired.
 4. **Use the `classic` preset.**
@@ -153,15 +182,15 @@ drop `--defaults` and pass the documented overrides instead
 (`--main=master`, `--develop=…`, `--feature=feat/`, etc.).
 
 Then, in the local-finish workflow (Hard rule 3),
-enable squash on feature finish:
+enable rebase on feature finish:
 
 ```sh
-git config gitflow.branch.feature.upstreamstrategy squash
+git config gitflow.branch.feature.upstreamstrategy rebase
 ```
 
 In the PR-review workflow,
 skip this command and configure the platform's PR-merge button
-to squash instead.
+to "rebase and merge" instead.
 
 Verify:
 
@@ -171,15 +200,16 @@ git config --get-regexp '^gitflow\.'
 
 The output should list the preset's branch and prefix entries.
 For the local-finish workflow it must also include
-`gitflow.branch.feature.upstreamstrategy squash`;
+`gitflow.branch.feature.upstreamstrategy rebase`;
 for the PR-review workflow that key must be absent.
 
 ## Procedure: feature branch lifecycle
 
 The procedure below describes the **local-finish** workflow
 (Hard rule 3):
-the squash-merge happens on the developer's machine via
-`git flow feature finish`.
+the contributor collapses the feature branch into a single commit
+locally,
+then `git flow feature finish` rebases that one commit onto `develop`.
 For the **PR-review** workflow,
 jump to the alternative section below.
 
@@ -199,17 +229,48 @@ Publish (optional, for shared work):
 git flow feature publish <name>
 ```
 
+Collapse to a single commit (Hard rule 3):
+before finishing,
+rebase the feature branch interactively against the current `develop`
+and fold every commit but the first into it,
+then rewrite the resulting commit message into a clean,
+self-contained summary.
+
+```sh
+git rebase -i $(git merge-base HEAD develop)
+# In the editor: keep the first line as `pick`,
+# change every following line to `fixup` (drops their messages) or
+# `squash` (keeps and lets you edit them).
+# Save and exit; if you used `squash` or `reword`,
+# the editor reopens for the final commit message —
+# write a clean, self-contained summary.
+```
+
+Equivalent shortcut when none of the existing commit messages are
+worth keeping:
+
+```sh
+git reset --soft $(git merge-base HEAD develop)
+git commit -m "<clean summary of the feature>"
+```
+
+After the collapse,
+`git log develop..HEAD` should show exactly one commit.
+
 Finish:
 
 ```sh
 git flow feature finish <name>
 ```
 
-With `upstreamstrategy=squash` set,
+With `upstreamstrategy=rebase` set,
 this:
 
 1. switches to `develop`,
-2. squash-merges `feature/<name>` into `develop` as a single commit,
+2. rebases the (now single-commit) `feature/<name>` onto `develop`
+   linearly —
+   no merge commit,
+   original authorship and the hand-written message preserved,
 3. deletes the local `feature/<name>` branch.
 
 Push `develop` afterwards.
@@ -219,11 +280,29 @@ Argument-less shorthand works on the current branch:
 git flow finish
 ```
 
+If the collapse step is skipped,
+`git flow feature finish` will still rebase,
+but every WIP commit on the feature branch will land on `develop` as
+a separate commit —
+which is **not** the policy this skill enforces.
+`finish` also deletes the feature branch,
+so recovery means interactive-rebasing `develop` itself
+(`git rebase -i origin/develop`) to fold the new commits into one
+*before* pushing —
+only safe while those commits are still local.
+Don't skip the collapse step.
+
 ### PR-review alternative
 
 In the PR-review workflow (Hard rule 3),
-the squash is produced by the hosting platform,
+the rebase-merge is produced by the hosting platform's
+"rebase and merge" button,
 not by `git flow feature finish`.
+The contributor still collapses the branch to a single commit locally
+*before* opening or updating the PR
+(same `git rebase -i` / `git reset --soft` procedure as above) —
+otherwise multiple commits land on `develop`,
+defeating the policy.
 After the PR is merged:
 
 - the remote feature branch is already gone
@@ -231,7 +310,7 @@ After the PR is merged:
 - delete the local copy with `git branch -d feature/<name>`
   (or `git flow feature delete <name>`);
 - do not run `git flow feature finish` —
-  it would double-merge or fail.
+  it would double-apply or fail.
 
 ## Procedure: release branches
 
@@ -277,17 +356,18 @@ git flow bugfix finish <name>
 ```
 
 `bugfix finish` uses the default `merge` upstream strategy.
-If the repo wants bugfixes squashed like features
+If the repo wants bugfixes collapsed like features
 (local-finish workflow per Hard rule 3),
-set the analogous key:
+set the analogous key and follow the same collapse-then-finish
+procedure (interactive rebase → single commit → finish):
 
 ```sh
-git config gitflow.branch.bugfix.upstreamstrategy squash
+git config gitflow.branch.bugfix.upstreamstrategy rebase
 ```
 
 In the PR-review workflow,
 treat bugfix branches the same as features —
-the platform produces the squash,
+the platform produces the rebase-merge,
 no local `git flow bugfix finish`.
 
 ## Procedure: migrate from old git-flow / gitflow-avh
@@ -342,12 +422,17 @@ or when `brew list` / `apt list --installed` shows `git-flow` or
 
    If every captured value matches the classic defaults,
    `git flow init --preset=classic --defaults` is enough.
-6. Re-apply the squash setting per the workflow (Hard rule 3):
+6. Re-apply the rebase setting per the workflow (Hard rule 3):
    - local-finish:
-     `git config gitflow.branch.feature.upstreamstrategy squash`;
+     `git config gitflow.branch.feature.upstreamstrategy rebase`,
+     and follow the collapse-then-finish procedure
+     (interactive rebase → single commit → `git flow feature finish`)
+     on every feature;
    - PR-review:
-     skip the config and configure the platform's PR-merge button
-     to squash.
+     skip the config,
+     configure the platform's PR-merge button to "rebase and merge",
+     and collapse feature branches to a single commit locally before
+     opening the PR.
 7. Verify `git flow version` reports the git-flow-next version
    from `mise.toml`,
    and `command -v git-flow` resolves into `~/.local/share/mise/`

@@ -30,6 +30,7 @@ instead of project (`.claude/skills/`).
 | [`roast`](skills/roast/SKILL.md)                           | Direct critical review of an artifact; surfaces problems, stops at findings (no fix proposals).                    |
 | [`vcs-commit-msg`](skills/vcs-commit-msg/SKILL.md)         | Writes commit messages matching the project's existing style (git or other VCS); never AI-attributed.              |
 | [`vcs-identity-check`](skills/vcs-identity-check/SKILL.md) | Verifies VCS identity (name + email) before committing; recommends commit signing (GPG/SSH) if missing.            |
+| [`mktemp-d`](skills/mktemp-d/SKILL.md)                     | Forbids hardcoded `/tmp/...` paths; mandates `mktemp -d` instead.                                                  |
 | [`which`](skills/which/SKILL.md)                           | Forbids `which`; mandates POSIX `command -v` instead.                                                              |
 
 ## Layout

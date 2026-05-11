@@ -39,6 +39,7 @@ instead of project (`.claude/skills/`).
 | [`mktemp-d`](skills/mktemp-d/SKILL.md)                     | Forbids hardcoded `/tmp/...` paths; mandates `mktemp -d` instead.                                                  |
 | [`which`](skills/which/SKILL.md)                           | Forbids `which`; mandates POSIX `command -v` instead.                                                              |
 | [`shell-snippet-fmt`](skills/shell-snippet-fmt/SKILL.md)   | Wraps shell snippets to ≤120 chars/line with explicit `\` line continuation at safe break points.                  |
+| [`jo`](skills/jo/SKILL.md)                                 | Prefers [`jo`](https://github.com/jpmens/jo) for building JSON in shell over hand-written quoted JSON literals.    |
 
 ## Layout
 

@@ -38,6 +38,7 @@ instead of project (`.claude/skills/`).
 | [`vcs-identity-check`](skills/vcs-identity-check/SKILL.md) | Verifies VCS identity (name + email) before committing; recommends commit signing (GPG/SSH) if missing.            |
 | [`mktemp-d`](skills/mktemp-d/SKILL.md)                     | Forbids hardcoded `/tmp/...` paths; mandates `mktemp -d` instead.                                                  |
 | [`which`](skills/which/SKILL.md)                           | Forbids `which`; mandates POSIX `command -v` instead.                                                              |
+| [`shell-snippet-fmt`](skills/shell-snippet-fmt/SKILL.md)   | Wraps shell snippets to ≤120 chars/line with explicit `\` line continuation at safe break points.                  |
 
 ## Layout
 

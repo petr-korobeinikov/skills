@@ -4,6 +4,12 @@ Personal collection of agent skills for Claude Code and other compatible agents.
 
 ## Install
 
+Claude Code (all skills, non-interactive, copy into project):
+
+```bash
+npx skills add petr-korobeinikov/skills --skill '*' --copy --agent claude-code -y
+```
+
 All skills:
 
 ```bash

@@ -16,14 +16,35 @@ All skills:
 npx skills add petr-korobeinikov/skills -a claude-code
 ```
 
-Single skill:
+Single skill — replace `<skill-name>` with the one you want:
 
 ```bash
-npx skills add petr-korobeinikov/skills --skill skill-new -a claude-code
+npx skills add petr-korobeinikov/skills --skill <skill-name> -a claude-code
+```
+
+For example, [`sembr`](skills/sembr/SKILL.md) or [`mktemp-d`](skills/mktemp-d/SKILL.md):
+
+```bash
+npx skills add petr-korobeinikov/skills --skill sembr -a claude-code
+npx skills add petr-korobeinikov/skills --skill mktemp-d -a claude-code
 ```
 
 Add `-g` for global (`~/.claude/skills/`)
 instead of project (`.claude/skills/`).
+
+## Update
+
+Re-run the install command —
+`--copy -y` overwrites the existing files in `.claude/skills/` in place,
+so install and update share one command:
+
+```bash
+npx skills add petr-korobeinikov/skills --skill '*' --copy -a claude-code -y
+```
+
+Avoid `npx skills update` —
+it stages the package under `.agents/` in the host repo,
+which clutters `git status`.
 
 ## Skills
 

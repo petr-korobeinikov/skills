@@ -86,11 +86,28 @@ update the **Skills** section in `README.md` to reflect the change
 
 ## Distribution commands (for reference)
 
+Skills target Claude Code only —
+we do not maintain compatibility with other agents.
+The standard install flags reflect that:
+
+- `-a claude-code` —
+  lands skills in the host's `.claude/skills/`
+  instead of spreading copies across other agent configs.
+- `--copy` —
+  writes plain file copies instead of symlinks.
+  Symlinks couple the host repo to this checkout
+  and clutter `git status` in the consumer project.
+- `-y` —
+  skips interactive prompts when installing the full set.
+
 ```bash
-npx skills add petr-korobeinikov/skills                    # install all
-npx skills add petr-korobeinikov/skills --skill <name>     # install one
+# install all skills
+npx skills add petr-korobeinikov/skills --skill '*' --copy -a claude-code -y
+
+# install one skill
+npx skills add petr-korobeinikov/skills --skill <name> --copy -a claude-code
 ```
 
-Lands in `.claude/skills/` (project) or `~/.claude/skills/` with `-g`.
+Add `-g` for global (`~/.claude/skills/`) instead of project (`.claude/skills/`).
 Consumers track versions via `.skill-lock.json` in their own project —
 this repo does not maintain a lockfile.

@@ -40,6 +40,7 @@ instead of project (`.claude/skills/`).
 | [`which`](skills/which/SKILL.md)                           | Forbids `which`; mandates POSIX `command -v` instead.                                                              |
 | [`shell-snippet-fmt`](skills/shell-snippet-fmt/SKILL.md)   | Wraps shell snippets to ≤120 chars/line with explicit `\` line continuation at safe break points.                  |
 | [`jo`](skills/jo/SKILL.md)                                 | Prefers [`jo`](https://github.com/jpmens/jo) for building JSON in shell over hand-written quoted JSON literals.    |
+| [`tee`](skills/tee/SKILL.md)                               | Forbids `\| tail -n N` alone; captures full output via `tee` to a `mktemp -d` file, then truncates only for view.  |
 
 ## Layout
 

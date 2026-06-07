@@ -71,7 +71,30 @@ and recommend commit signing when it isn't configured.
 
    This step is informational
    and does not block the commit by itself.
-4. Show the resolved values and ask the user to confirm —
+4. **Short-circuit when prior commits already match.**
+   If the same author has a prior commit in this repo
+   whose signing intent matches the current config,
+   skip the confirmation in step 5 and the signing recommendation —
+   the user has implicitly validated this setup before
+   by committing under it.
+
+   For git, run
+   `git log -1 --author="<email>" --pretty=format:'%G?'`
+   and treat as a match when:
+   - prior commit carries a signature (`%G?` ≠ `N`)
+     and current signing is **Configured**; or
+   - prior commit has no signature (`%G?` = `N`)
+     and current signing is **Not configured**.
+
+   This compares intent (sign / don't sign), not the key,
+   so it works for GPG and SSH alike
+   regardless of how `user.signingkey` is written
+   (key ID, fingerprint, with or without `0x…` prefix,
+   or a public-key file path).
+
+   Anything else — no prior commit by this author,
+   **Broken** state, or non-git VCS — falls through to step 5.
+5. Show the resolved values and ask the user to confirm —
    «`<First> <Last>` <email> (from `<scope>`) —
    correct order, no typo?».
    `<scope>` is what git reported (`local` / `global` / `system`);
@@ -84,7 +107,7 @@ and recommend commit signing when it isn't configured.
    - signing **Broken** →
      name the inconsistent settings explicitly
      and treat it as fix-now, not a suggestion.
-5. If any identity check fails or the user rejects, stop.
+6. If any identity check fails or the user rejects, stop.
    Do not proceed to the commit.
 
 ## Fix

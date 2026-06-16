@@ -51,6 +51,7 @@ which clutters `git status`.
 | Skill                                                      | What it does                                                                                                       |
 |------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------|
 | [`skill-new`](skills/skill-new/SKILL.md)                   | Scaffolds a new skill in the project's existing layout.                                                            |
+| [`npx-skills`](skills/npx-skills/SKILL.md)                 | Documents `npx skills add` for install/update; on start, restores skills listed in `skills-lock.json`.             |
 | [`sembr`](skills/sembr/SKILL.md)                           | Reformats prose using [Semantic Line Breaks](https://sembr.org/); auto-applies to `.md` / `.rst` edits.            |
 | [`mise`](skills/mise/SKILL.md)                             | Configures [mise](https://mise.jdx.dev/) as the sole runtime/tool manager; aqua backend, fully pinned versions.    |
 | [`git-flow-next`](skills/git-flow-next/SKILL.md)           | Installs [git-flow-next](https://git-flow.sh/) via mise; runs Gitflow with rebase-to-one-commit on feature finish. |

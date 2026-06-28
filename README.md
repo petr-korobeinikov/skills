@@ -66,6 +66,7 @@ which clutters `git status`.
 | [`fd`](skills/fd/SKILL.md)                                 | Prefers [`fd`](https://github.com/sharkdp/fd) over `find` for filesystem search; falls back to `find` when absent. |
 | [`actionlint`](skills/actionlint/SKILL.md)                 | Lints staged GitHub Actions workflows with actionlint before commit; installs it via mise when missing.            |
 | [`act`](skills/act/SKILL.md)                               | Second line after actionlint: runs workflows locally via [`act`](https://github.com/nektos/act); never blocks.     |
+| [`dependency-audit`](skills/dependency-audit/SKILL.md)     | Hard gate before adopting any dependency, any language: CVE/OSV + Socket + Snyk, then an isolated Docker sandbox.  |
 
 ## Layout
 

@@ -1,6 +1,12 @@
 {
   "version": 1,
   "skills": {
+    "actionlint": {
+      "source": "petr-korobeinikov/skills",
+      "sourceType": "github",
+      "skillPath": "skills/actionlint/SKILL.md",
+      "computedHash": "cb41b62442b83712b21f6cd0a2330e1ab4c48c7fd80ad2c3b8968fbd8b04e450"
+    },
     "fd": {
       "source": "petr-korobeinikov/skills",
       "sourceType": "github",

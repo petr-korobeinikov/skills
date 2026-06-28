@@ -64,6 +64,7 @@ which clutters `git status`.
 | [`jo`](skills/jo/SKILL.md)                                 | Prefers [`jo`](https://github.com/jpmens/jo) for building JSON in shell over hand-written quoted JSON literals.    |
 | [`tee`](skills/tee/SKILL.md)                               | Forbids `\| tail -n N` alone; captures full output via `tee` to a `mktemp -d` file, then truncates only for view.  |
 | [`fd`](skills/fd/SKILL.md)                                 | Prefers [`fd`](https://github.com/sharkdp/fd) over `find` for filesystem search; falls back to `find` when absent. |
+| [`actionlint`](skills/actionlint/SKILL.md)                 | Lints staged GitHub Actions workflows with actionlint before commit; installs it via mise when missing.            |
 
 ## Layout
 

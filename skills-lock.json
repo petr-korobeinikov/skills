@@ -13,6 +13,12 @@
       "skillPath": "skills/actionlint/SKILL.md",
       "computedHash": "cb41b62442b83712b21f6cd0a2330e1ab4c48c7fd80ad2c3b8968fbd8b04e450"
     },
+    "dependency-audit": {
+      "source": "petr-korobeinikov/skills",
+      "sourceType": "github",
+      "skillPath": "skills/dependency-audit/SKILL.md",
+      "computedHash": "6c96e193c5e7ce497db1b13ecacff81f56e02b8af30f42edcedf97f9562f02e9"
+    },
     "fd": {
       "source": "petr-korobeinikov/skills",
       "sourceType": "github",

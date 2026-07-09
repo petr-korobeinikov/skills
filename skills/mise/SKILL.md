@@ -91,6 +91,17 @@ and uses aqua (or mise's built-in core) for everything else.
    and other sections — handle separately.
 7. **Local setup only.**
    CI integration is out of scope for this skill.
+8. **`mise.lock` is mise-generated, never hand-edited.**
+   Only a mise command may write it —
+   normally `mise install`.
+   Never create, edit, or patch `mise.lock` by hand
+   or with any non-mise tool:
+   not the versions,
+   not the checksums,
+   not the platform entries.
+   To change what the lockfile records,
+   edit `mise.toml` and run `mise install`;
+   the lockfile follows.
 
 ## Confirming what mise will do
 

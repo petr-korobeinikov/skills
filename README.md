@@ -68,6 +68,7 @@ which clutters `git status`.
 | [`act`](skills/act/SKILL.md)                               | Second line after actionlint: runs workflows locally via [`act`](https://github.com/nektos/act); never blocks.     |
 | [`dependency-audit`](skills/dependency-audit/SKILL.md)     | Hard gate before adopting any dependency, any language: CVE/OSV + Socket + Snyk, then an isolated Docker sandbox.  |
 | [`ssh-audit`](skills/ssh-audit/SKILL.md)                   | Audits SSH server/client crypto via jtesta/ssh-audit; reads fail/warn/rec, maps findings to sshd_config fixes.     |
+| [`dockerfile`](skills/dockerfile/SKILL.md)                 | Composes/optimizes Dockerfiles: deps-before-source cache, multi-stage toward `FROM scratch`, non-root, hadolint.   |
 
 ## Layout
 

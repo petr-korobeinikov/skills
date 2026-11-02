@@ -53,7 +53,7 @@ which clutters `git status`.
 | [`skill-new`](skills/skill-new/SKILL.md)                   | Scaffolds a new skill in the project's existing layout.                                                            |
 | [`npx-skills`](skills/npx-skills/SKILL.md)                 | Documents `npx skills add` for install/update; on start, restores skills listed in `skills-lock.json`.             |
 | [`sembr`](skills/sembr/SKILL.md)                           | Reformats prose using [Semantic Line Breaks](https://sembr.org/); auto-applies to `.md` / `.rst` edits.            |
-| [`mise`](skills/mise/SKILL.md)                             | Configures [mise](https://mise.jdx.dev/) as the sole runtime/tool manager; aqua backend, fully pinned versions.    |
+| [`mise`](skills/mise/SKILL.md)                             | Configures [mise](https://mise.jdx.dev/) as sole tool manager; full pins; `pypi:` CLIs isolated on locked graphs.  |
 | [`git-flow-next`](skills/git-flow-next/SKILL.md)           | Installs [git-flow-next](https://git-flow.sh/) via mise; runs Gitflow with rebase-to-one-commit on feature finish. |
 | [`roast`](skills/roast/SKILL.md)                           | Direct critical review of an artifact; surfaces problems, stops at findings (no fix proposals).                    |
 | [`vcs-commit-msg`](skills/vcs-commit-msg/SKILL.md)         | Writes commit messages matching the project's existing style (git or other VCS); never AI-attributed.              |
@@ -67,7 +67,7 @@ which clutters `git status`.
 | [`actionlint`](skills/actionlint/SKILL.md)                 | Lints staged GitHub Actions workflows with actionlint before commit; installs it via mise when missing.            |
 | [`act`](skills/act/SKILL.md)                               | Second line after actionlint: runs workflows locally via [`act`](https://github.com/nektos/act); never blocks.     |
 | [`dependency-audit`](skills/dependency-audit/SKILL.md)     | Hard gate before adopting any dependency, any language: CVE/OSV + Socket + Snyk, then an isolated Docker sandbox.  |
-| [`ssh-audit`](skills/ssh-audit/SKILL.md)                   | Audits SSH server/client crypto via jtesta/ssh-audit; reads fail/warn/rec, maps findings to sshd_config fixes.     |
+| [`ssh-audit`](skills/ssh-audit/SKILL.md)                   | Audits SSH crypto via jtesta/ssh-audit (isolated `pypi:` tool); reads fail/warn/rec, maps findings to sshd_config. |
 | [`dockerfile`](skills/dockerfile/SKILL.md)                 | Composes/optimizes Dockerfiles: deps-before-source cache, multi-stage toward `FROM scratch`, non-root, hadolint.   |
 
 ## Layout

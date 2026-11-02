@@ -190,7 +190,7 @@ it runs the binary already on `PATH` (the mise-managed one)
 instead of fetching its own via the Go toolchain (`actionlint`)
 or Docker (`actionlint-docker`).
 Install the `pre-commit` runner itself through the mise skill
-(it's a Python CLI → the `pipx` backend).
+(it's a Python CLI → the `pypi` backend).
 
 ## Not in scope
 

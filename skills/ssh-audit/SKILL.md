@@ -4,7 +4,7 @@ description: >-
   Audit the crypto posture of an SSH server or client with jtesta/ssh-audit —
   key-exchange, host-key, cipher and MAC algorithms, plus non-crypto checks
   (the DHEat DoS, CVE-2002-20001, and Terrapin, CVE-2023-48795). Installs
-  cleanly through the mise skill (pipx, isolated venv, zero dependencies,
+  cleanly through the mise skill (pypi, isolated venv, zero dependencies,
   nothing on the target — the scan is remote). Reads the fail/warn/rec output,
   then turns findings into concrete sshd_config directives via the tool's
   built-in hardening guides — without prescribing how you deploy them.
@@ -66,16 +66,20 @@ hits the same `sshd` and yields the same verdict.
 
 Check for it first — `command -v ssh-audit`.
 If it's missing, install it with the mise skill;
-`pipx:ssh-audit` is a mise tool spec (mise's pipx backend), not a shell command.
-With the mise binary but no mise skill, add and pin it yourself:
+`pypi:ssh-audit` is a mise tool spec (mise's pypi backend), not a shell command.
+With the mise binary but no mise skill, add and pin it yourself —
+uv first, because without it the pypi backend demands pipx:
 
 ```sh
-mise use -g "pipx:ssh-audit@<version>"   # resolve <version> via `mise latest`
+# Resolve each version via `mise latest uv`, `mise latest python`, `mise latest pypi:ssh-audit`
+mise use -g "uv@<uv-version>"
+mise use -g "pypi:ssh-audit[python=<python-version>]@<version>"
 ```
 
 ssh-audit is pure-stdlib Python,
-so pipx gives it an isolated venv with zero dependencies
-and puts nothing in system site-packages.
+so its venv holds that one wheel with zero dependencies,
+on a private Python that stays off your `PATH`,
+and nothing lands in system site-packages.
 Never `pip install` it into site-packages, and never `brew` / curl-pipe it.
 If there's no mise at all, say so and stop — don't reach for another installer.
 
@@ -373,7 +377,7 @@ A failing policy check exits non-zero — wire that as the gate.
 
 - **Outbound firewall (Little Snitch, LuLu, …)** cuts a *fresh* CLI
   the first time it connects —
-  the pipx venv's Python is a new binary, so allow it,
+  the tool's private Python is a new binary, so allow it,
   and raise `-t` if the prompt pushes the first connection past the timeout.
   Offline commands (`--get-hardening-guide`, `--list-hardening-guides`,
   `--lookup`) need no network and won't prompt.
